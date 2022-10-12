@@ -1,8 +1,6 @@
 from tkinter import *
 from tkinter import ttk
 
-MAX_DEFAULT_VALUE = 7 + 1
-COMBOBOX_WIDTH = 3
 ENTRY_WIDTH = 10
 
 
@@ -16,7 +14,7 @@ class problem_conditions_input:
 
         # Frames
         self.root = ttk.Frame(root, style="TopWhiteBg.TFrame", padding="3 3 12 12")
-        self.root.grid()
+        self.root.grid(column=0, row=0, sticky=(N, W, E, S))
 
         self.S0_frame = ttk.Frame(self.root, style="TopWhiteBg.TFrame", padding="3 3 12 12")
         self.S0_frame.grid(column=0, row=0, sticky=(N, W, E, S))

@@ -12,7 +12,7 @@ class View:
         try:
             self.root = Tk()
             self.root.configure(bg="white")
-            self.root.title("Математичне моделювання. Лабораторна робота №2")
+            self.root.title("Математичне моделювання. Лабораторна робота №3")
 
             self.notebook = ttk.Notebook(self.root)
             self.notebook.grid(column=0, row=0, sticky=(N, E, W, S))
