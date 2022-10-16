@@ -33,6 +33,7 @@ class v_input:
         self.count_var = StringVar()
         self.count_var.set("1")
         self.count_var.trace("w", lambda name, index, mode: self.change_and_show_v())
+        self.lambda_tick = 0  # Do not work without due to upper lambda
 
         ttk.Label(self.count_label_frame, text="Кількість векторів v(x,t) -", style="WhiteBg.TLabel") \
             .grid(column=0, row=0, sticky=(N, E, W, S))
@@ -89,36 +90,37 @@ class v_input:
 
     def change_and_show_v(self):
         try:
-            old_count = len(self.v0_vars)
+            self.lambda_tick += 1
+            if self.lambda_tick % 2 == 0:
+                old_count = len(self.v0_vars)
+                for i in range(max(old_count, int(self.count_var.get() or 0))):
+                    if i >= min(old_count, int(self.count_var.get() or 0)):
+                        if old_count > int(self.count_var.get() or 0):
+                            self.v0_vars = self.v0_vars[0:i]
+                            self.vG_vars = self.vG_vars[0:i]
 
-            for i in range(max(old_count, int(self.count_var.get() or 0))):
-                if i >= min(old_count, int(self.count_var.get() or 0)):
-                    if old_count > int(self.count_var.get() or 0):
-                        self.v0_vars = self.v0_vars[0:i]
-                        self.vG_vars = self.vG_vars[0:i]
+                            for ii in range(i, old_count):
+                                self.v0_entries[ii].destroy()
+                                self.vG_entries[ii].destroy()
 
-                        for ii in range(i, old_count):
-                            self.v0_entries[ii].destroy()
-                            self.vG_entries[ii].destroy()
+                            self.v0_entries = self.v0_entries[0:i]
+                            self.vG_entries = self.vG_entries[0:i]
+                            break
+                        else:
+                            self.v0_vars.append(StringVar())
+                            self.vG_vars.append(StringVar())
 
-                        self.v0_entries = self.v0_entries[0:i]
-                        self.vG_entries = self.vG_entries[0:i]
-                        break
-                    else:
-                        self.v0_vars.append(StringVar())
-                        self.vG_vars.append(StringVar())
+                            self.v0_entries.append(
+                                ttk.Entry(self.v_v_frame, width=ENTRY_WIDTH,
+                                          textvariable=self.v0_vars[i]))
+                            self.vG_entries.append(
+                                ttk.Entry(self.v_v_frame, width=ENTRY_WIDTH,
+                                          textvariable=self.vG_vars[i]))
 
-                        self.v0_entries.append(
-                            ttk.Entry(self.v_v_frame, width=ENTRY_WIDTH,
-                                      textvariable=self.v0_vars[i]))
-                        self.vG_entries.append(
-                            ttk.Entry(self.v_v_frame, width=ENTRY_WIDTH,
-                                      textvariable=self.vG_vars[i]))
+                            self.v0_vars[i].set("0")
+                            self.v0_entries[i].grid(row=0, column=i, sticky=(N, W, E, S))
 
-                        self.v0_vars[i].set("0")
-                        self.v0_entries[i].grid(row=0, column=i, sticky=(N, W, E, S))
-
-                        self.vG_vars[i].set("0")
-                        self.vG_entries[i].grid(row=1, column=i, sticky=(N, W, E, S))
+                            self.vG_vars[i].set("0")
+                            self.vG_entries[i].grid(row=1, column=i, sticky=(N, W, E, S))
         except Exception as e:
             print(e)
