@@ -33,7 +33,6 @@ class v_input:
         self.count_var = StringVar()
         self.count_var.set("1")
         self.count_var.trace("w", lambda name, index, mode: self.change_and_show_v())
-        self.lambda_tick = 0  # Do not work without due to upper lambda
 
         ttk.Label(self.count_label_frame, text="Кількість векторів v(x,t) -", style="WhiteBg.TLabel") \
             .grid(column=0, row=0, sticky=(N, E, W, S))
@@ -90,8 +89,7 @@ class v_input:
 
     def change_and_show_v(self):
         try:
-            self.lambda_tick += 1
-            if self.lambda_tick % 2 == 0:
+            if self.count_var.get() and int(self.count_var.get()) > 0:
                 old_count = len(self.v0_vars)
                 for i in range(max(old_count, int(self.count_var.get() or 0))):
                     if i >= min(old_count, int(self.count_var.get() or 0)):
