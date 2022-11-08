@@ -21,8 +21,8 @@ def A(G: Callable, Lr0_list: np.array, xl0_list: np.array, LrG_list: np.array, s
     L_0 = len(xl0_list)
     R_0 = len(Lr0_list)
 
-    L_G = len(xl0_list)
-    R_G = len(Lr0_list)
+    L_G = len(slG_list)
+    R_G = len(LrG_list)
 
     A11 = []
     for i in range(R_0):

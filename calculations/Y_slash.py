@@ -31,14 +31,12 @@ def Y_slash(y_infinity: Callable, Lr0_list: np.array, xl0_list: np.array, LrG_li
     L_0 = len(xl0_list)
     R_0 = len(Lr0_list)
 
-    L_G = len(xl0_list)
-    R_G = len(Lr0_list)
+    L_G = len(slG_list)
+    R_G = len(LrG_list)
 
     Yrl = []
     for i in range(R_0):
         for j in range(L_0):
-            # def temp_y_inf(t):
-            #     return y_infinity(xl0_list[j], t)
 
             Yrl.append(partial_derivative(y_infinity, 1, 1, (xl0_list[j], 0)))
             # Yrl.append(lambdify((x, t), Lr0_list[i](y_infinity(x, t)).subs([(x, xl0_list[j]), (t, 0)])))

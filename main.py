@@ -1,5 +1,5 @@
 from view import View
-from calculations import y_infinity, A, Y_slash
+from calculations import y_infinity, A, Y_slash, A_v
 import numpy as np
 from sympy import diff, symbols
 
@@ -17,8 +17,8 @@ if __name__ == "__main__":
     slG_list = np.array([[0.5, 1],
                          [0.25, 0.75]])
 
-    res = A(G, Lr0_list, xl0_list, LrG_list, slG_list)
-    print(res[2][0][0](0.5, 0))
+    res_A = A(G, Lr0_list, xl0_list, LrG_list, slG_list)
+    print(res_A[2][0][0](0.5, 0))
 
 
     def u(x_, t_):
@@ -31,3 +31,4 @@ if __name__ == "__main__":
     print(y_inf(1, 0))
 
     print(Y_slash(y_inf, Lr0_list, xl0_list, LrG_list, slG_list))
+    print(A_v(res_A, lambda x_, t_: x_ + t_, lambda x_, t_: x_ - t_, S0, T))
