@@ -37,13 +37,14 @@ def Y_slash(y_infinity: Callable, Lr0_list: np.array, xl0_list: np.array, LrG_li
     Yrl = []
     for i in range(R_0):
         for j in range(L_0):
-
+            # MUST be changed when parsing would be implemented
             Yrl.append(partial_derivative(y_infinity, 1, 1, (xl0_list[j], 0)))
             # Yrl.append(lambdify((x, t), Lr0_list[i](y_infinity(x, t)).subs([(x, xl0_list[j]), (t, 0)])))
 
     Ypl = []
     for i in range(R_G):
         for j in range(L_G):
+            # MUST be changed when parsing would be implemented
             # Ypl.append(lambdify((x, t), LrG_list[i](y_infinity(x, t)).subs([(x, slG_list[j][0]), (t, slG_list[j][1])])))
             Ypl.append(partial_derivative(y_infinity, 0, 1, (slG_list[j][0], slG_list[j][1])))
 
