@@ -6,7 +6,7 @@ from scipy.integrate import dblquad
 def P(A_matrix: np.array, S0: np.array, T: float) -> np.array:
     """
 
-    :param A_matrix: np.array of A11, A12, A21, A22
+    :param A_matrix: list with elements A11, A12, A21, A22
     :param S0: has next form: np.array([[a0, b0],...,[a_last, b_last]) - Space-time domain
     :param T: float greater that zero - Max time value
     :return: np.array matrix of P11, P12, P21, P22 matrices
@@ -24,8 +24,8 @@ def P(A_matrix: np.array, S0: np.array, T: float) -> np.array:
 
     for i in range(2):
         for j in range(2):
-            P_ij_dim = len(A_matrix[2 * i])  # It's matrix Ai1 from math
-            P_parts.append([[[] for __ in range(P_ij_dim)] for _ in range(P_ij_dim)])
+            P_ij_dim = [len(A_matrix[2 * i]), len(A_matrix[2 * j])]  # It's matrix Ai1 from pdf file with math
+            P_parts.append([[[] for __ in range(P_ij_dim[1])] for _ in range(P_ij_dim[0])])
 
             def integrand1(row_: int, col_: int) -> Callable:
                 def temp(x: float, t: float) -> float:
@@ -43,8 +43,8 @@ def P(A_matrix: np.array, S0: np.array, T: float) -> np.array:
 
                 return temp
 
-            for row in range(P_ij_dim):
-                for col in range(P_ij_dim):
+            for row in range(P_ij_dim[0]):
+                for col in range(P_ij_dim[1]):
                     integral = 0.0
 
                     for ii in range(len(S0)):
@@ -61,10 +61,10 @@ def P(A_matrix: np.array, S0: np.array, T: float) -> np.array:
 
                     P_parts[-1][row][col] = integral
 
-    for pij in P_parts:
-        pij = np.array(pij)
+    for i in range(len(P_parts)):
+        P_parts[i] = np.array(P_parts[i])
 
     return np.block([
-        np.block([P_parts[0], P_parts[1]]),
-        np.block([P_parts[2], P_parts[3]])
+        [P_parts[0], P_parts[1]],
+        [P_parts[2], P_parts[3]]
     ])

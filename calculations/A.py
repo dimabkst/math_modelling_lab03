@@ -2,7 +2,7 @@ import numpy as np
 from typing import Callable
 
 
-def A(G: Callable, Lr0_list: np.array, xl0_list: np.array, LrG_list: np.array, slG_list: np.array) -> np.array:
+def A(G: Callable, Lr0_list: np.array, xl0_list: np.array, LrG_list: np.array, slG_list: np.array) -> list:
     """
 
     :param G: function of two variables - Green's function
@@ -38,4 +38,4 @@ def A(G: Callable, Lr0_list: np.array, xl0_list: np.array, LrG_list: np.array, s
     A21 = np.array(A21)
     A22 = A21
 
-    return np.array([A11, A12, A21, A22])
+    return [A11, A12, A21, A22]

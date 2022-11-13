@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     Lr0_list = np.array([differential_operator(0, 1)])
     # print(operator(0, 1)(lambda x_, t_: x_ + x_*t_, (1, 1)))
-    xl0_list = np.array([0.5, 1])
+    xl0_list = np.array([0.5, 1, 0.3])
     LrG_list = np.array([differential_operator(1, 1)])
     slG_list = np.array([[0.5, 1],
                          [0.25, 0.75]])
