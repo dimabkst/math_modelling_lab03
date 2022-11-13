@@ -15,17 +15,20 @@ def partial_derivative(func: Callable, var: int = 0, der_order: int = 1, point: 
     return derivative(func=wraps, x0=point[var], dx=1e-6, n=der_order)
 
 
-def operator(var: int = 0, der_order: int = 1):
-    def result(func: Callable, point: tuple = ()):
-        args = list(point[:])
+def differential_operator(var: int = 0, der_order: int = 1):
+    def derivative_of_func(func: Callable):
+        def derivative_of_func_in_point(*point):
+            args = list(point[:])
 
-        def wraps(x):
-            args[var] = x
-            return func(*args)
+            def wraps(x):
+                args[var] = x
+                return func(*args)
 
-        return derivative(func=wraps, x0=point[var], dx=1e-6, n=der_order)
+            return derivative(func=wraps, x0=point[var], dx=1e-6, n=der_order)
 
-    return result
+        return derivative_of_func_in_point
+
+    return derivative_of_func
 
 
 if __name__ == "__main__":
@@ -34,10 +37,10 @@ if __name__ == "__main__":
         return x_ ** 2
 
 
-    Lr0_list = np.array([operator(0, 1)])
+    Lr0_list = np.array([differential_operator(0, 1)])
     # print(operator(0, 1)(lambda x_, t_: x_ + x_*t_, (1, 1)))
     xl0_list = np.array([0.5, 1])
-    LrG_list = np.array([operator(1, 1)])
+    LrG_list = np.array([differential_operator(1, 1)])
     slG_list = np.array([[0.5, 1],
                          [0.25, 0.75]])
 
