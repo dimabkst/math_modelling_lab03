@@ -1,7 +1,32 @@
 from view import View
 from calculations import y_infinity, A, Y_slash, A_v, P
 import numpy as np
-from sympy import diff, symbols
+from typing import Callable
+from scipy.misc import derivative
+
+
+def partial_derivative(func: Callable, var: int = 0, der_order: int = 1, point: tuple = ()):
+    args = list(point[:])
+
+    def wraps(x):
+        args[var] = x
+        return func(*args)
+
+    return derivative(func=wraps, x0=point[var], dx=1e-6, n=der_order)
+
+
+def operator(var: int = 0, der_order: int = 1):
+    def result(func: Callable, point: tuple = ()):
+        args = list(point[:])
+
+        def wraps(x):
+            args[var] = x
+            return func(*args)
+
+        return derivative(func=wraps, x0=point[var], dx=1e-6, n=der_order)
+
+    return result
+
 
 if __name__ == "__main__":
     # View()
@@ -9,11 +34,10 @@ if __name__ == "__main__":
         return x_ ** 2
 
 
-    x = symbols('x')
-    t = symbols('t')
-    Lr0_list = np.array([lambda f: diff(f, t)])
+    Lr0_list = np.array([operator(0, 1)])
+    # print(operator(0, 1)(lambda x_, t_: x_ + x_*t_, (1, 1)))
     xl0_list = np.array([0.5, 1])
-    LrG_list = np.array([lambda f: diff(f, x)])
+    LrG_list = np.array([operator(1, 1)])
     slG_list = np.array([[0.5, 1],
                          [0.25, 0.75]])
 
