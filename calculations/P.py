@@ -9,7 +9,7 @@ def P(A_matrix: np.array, S0: np.array, T: float) -> np.array:
     :param A_matrix: list with elements A11, A12, A21, A22
     :param S0: has next form: np.array([[a0, b0],...,[a_last, b_last]) - Space-time domain
     :param T: float greater that zero - Max time value
-    :return: np.array matrix of P11, P12, P21, P22 matrices
+    :return: np.array square matrix of P11, P12, P21, P22 matrices
     """
 
     A = abs(S0[0][0]) - S0[0][0]
@@ -18,7 +18,7 @@ def P(A_matrix: np.array, S0: np.array, T: float) -> np.array:
 
     P_parts = []
 
-    def calculate_matrix(matrix: np.array, x: float, t: float):
+    def calculate_matrix(matrix: np.array, x: float, t: float) -> np.array:
         res = [[matrix[row_][col_](x, t) for col_ in range(len(matrix[row_]))] for row_ in range(len(matrix))]
         return np.array(res)
 

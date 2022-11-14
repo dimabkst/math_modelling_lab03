@@ -1,20 +1,17 @@
 import numpy as np
 from typing import Callable
 from scipy.integrate import dblquad
-# from calculations import u_G
 
 
-def y_G(G: Callable, S0: np.array, T: float) -> Callable:
+def y_G(G: Callable, S0: np.array, T: float, u_G: Callable) -> Callable:
     """
 
-    :param G: function of two variables - Green's function
+    :param G: function of two variables x, t - Green's function
     :param S0: has next form: np.array([[a0, b0],...,[a_last, b_last]) - Space-time domain
     :param T: float greater that zero - Max time value
-    :return: function of two variables
+    :param u_G: function of two variables x, t
+    :return: function of two variables x, t
     """
-
-    # u_G = u_G(...)
-    def u_G(x, t): return
 
     A = abs(S0[0][0]) - S0[0][0]
     B = abs(S0[-1][1]) + S0[-1][1]
@@ -28,7 +25,8 @@ def y_G(G: Callable, S0: np.array, T: float) -> Callable:
         integral += dblquad(integrand, T, 0, lambda t_: A, lambda t_: S0[0][0])[0]
 
         for i in range(1, len(S0) - 1):
-            integral += dblquad(integrand, T, 0, lambda t_: S0[i][1], lambda t_: S0[i + 1][0])[0]  # Sec value is precision
+            integral += dblquad(integrand, T, 0, lambda t_: S0[i][1], lambda t_: S0[i + 1][0])[
+                0]  # Sec value is precision
 
         integral += dblquad(integrand, T, 0, lambda t_: S0[-1][1], lambda t_: B)[0]
 

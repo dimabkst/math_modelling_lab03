@@ -6,7 +6,7 @@ def Y_slash(y_infinity: Callable, Lr0_list: np.array, xl0_list: np.array, LrG_li
             slG_list: np.array) -> np.array:
     """
 
-    :param y_infinity: function of two variables
+    :param y_infinity: function of two variables x, t
     :param Lr0_list: list of Lr0 differential operators that look like: L(f) -> scipy.derivative(f) + ...
     :param xl0_list: list of float xl0: [x0, x1, x2, ...]
     :param LrG_list: list of LrG differential operators that look like: L(f) -> scipy.derivative(f) + ...

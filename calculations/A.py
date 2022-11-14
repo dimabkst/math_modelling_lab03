@@ -5,7 +5,7 @@ from typing import Callable
 def A(G: Callable, Lr0_list: np.array, xl0_list: np.array, LrG_list: np.array, slG_list: np.array) -> list:
     """
 
-    :param G: function of two variables - Green's function
+    :param G: function of two variables x, t - Green's function
     :param Lr0_list: list of Lr0 differential operators that look like: L(f) -> scipy.derivative(f) + ...
     :param xl0_list: list of float xl0: [x0, x1, x2, ...]
     :param LrG_list: list of LrG differential operators that look like: L(f) -> scipy.derivative(f) + ...
@@ -19,9 +19,10 @@ def A(G: Callable, Lr0_list: np.array, xl0_list: np.array, LrG_list: np.array, s
     L_G = len(slG_list)
     R_G = len(LrG_list)
 
-    def func_wrapped_for_A(func, x, t):
+    def func_wrapped_for_A(func: Callable, x: float, t: float) -> Callable:
         def shifted_func(x_, t_):
             return func(x - x_, t - t_)
+
         return shifted_func
 
     A11 = []

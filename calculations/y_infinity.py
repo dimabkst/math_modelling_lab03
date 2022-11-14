@@ -6,11 +6,11 @@ from scipy.integrate import dblquad
 def y_infinity(G: Callable, u: Callable, S0: np.array, T: float) -> Callable:
     """
 
-    :param G: function of two variables - Green's function
-    :param u: function of two variables - Disturbance
+    :param G: function of two variables x, t - Green's function
+    :param u: function of two variables x, t - Disturbance
     :param S0: has next form: np.array([[a0, b0],...,[a_last, b_last]) - Space-time domain
     :param T: float greater that zero - Max time value
-    :return: function of two variables
+    :return: function of two variables x, t
     """
 
     def res(x: float, t: float) -> float:
