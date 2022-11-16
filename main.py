@@ -1,6 +1,8 @@
+import math
+
 from view import View
 from calculations import y_infinity, A, Y_slash, A_v, P, u_0, u_G, y_0, y_G, y, solve
-from parsings import parse_operator
+from parsings import parse_operator, parse_function
 import numpy as np
 from typing import Callable
 from scipy.misc import derivative
@@ -58,6 +60,7 @@ if __name__ == "__main__":
 
     # Parser testing
     operator_str = "4*d[x,1]-8*d[t,2]"
+    print(f'Operator string: {operator_str}')
     res_parse_operator = parse_operator(operator_str)
 
 
@@ -65,4 +68,22 @@ if __name__ == "__main__":
         return x ** 2 + t ** 3
 
 
-    print(res_parse_operator(parse_test_func)(1, 0))
+    x0, y0 = 1, 0
+    print(f'Operator on function x^2 + t^3 value in ({x0}, {y0}):{res_parse_operator(parse_test_func)(1, 0)}')
+    print()
+
+    function_str1 = "sin(x)+t**2"
+    print(f'Function string: {function_str1}')
+    res_parse_function1 = parse_function(function_str1)
+    x1, t1 = math.pi / 2, 1
+    print(f'Function value in ({x1}, {t1}): {res_parse_function1(x1, t1)}')
+    print()
+
+    function_str2 = "(1/sqrt(4*pi*t))*exp(-x^2/(4*t))"
+    # function_str2 = "(Piecewise((0, t<=0),(1, t>0))(t)/sqrt(4*pi*t))*exp(-x^2/(4*t))"
+    # function_str2 = "(Heaviside(t)/sqrt(4*pi*t))*exp(-x^2/(4*t))"
+    print(f'Function string: {function_str2}')
+    res_parse_function2 = parse_function(function_str2)
+    x2, t2 = math.pi / 2, 1
+    print(f'Function value in ({x2}, {t2}): {res_parse_function2(x2, t2)}')
+    print()
