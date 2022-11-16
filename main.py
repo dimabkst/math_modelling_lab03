@@ -2,7 +2,7 @@ import math
 
 from view import View
 from calculations import y_infinity, A, Y_slash, A_v, P, u_0, u_G, y_0, y_G, y, solve
-from parsings import parse_operator, parse_function
+from parsings import parse_operator, parse_function, parse_S0
 import numpy as np
 from typing import Callable
 from scipy.misc import derivative
@@ -86,4 +86,10 @@ if __name__ == "__main__":
     res_parse_function2 = parse_function(function_str2)
     x2, t2 = math.pi / 2, 1
     print(f'Function value in ({x2}, {t2}): {res_parse_function2(x2, t2)}')
+    print()
+
+    S0_str = "[0, 1] v [2,3]  [4,5.5]"
+    print(f'S0 string: {S0_str}')
+    res_parse_S0 = parse_S0(S0_str)
+    print(f'S0: {res_parse_S0}')
     print()

@@ -28,10 +28,10 @@ def parse_operator(operator_string: str) -> Callable:
     """
 
     op_str = operator_string.replace(' ', '')  # Remove all spaces
-    op_regex = r"[+-]?[0-9]+([.][0-9]+)?\*[d]\[(x|t)[,][1-9][0-9]*\]"
-    op_regex_obj = re.compile(op_regex)
+    atomic_op_regex = r"[+-]?[0-9]+([.][0-9]+)?\*[d]\[(x|t)[,][1-9][0-9]*\]"
+    atomic_op_regex_obj = re.compile(atomic_op_regex)
 
-    atomic_ops_str_iterator = op_regex_obj.finditer(op_str)
+    atomic_ops_str_iterator = atomic_op_regex_obj.finditer(op_str)
 
     atomic_ops = []
     for atomic_op_match_object in atomic_ops_str_iterator:

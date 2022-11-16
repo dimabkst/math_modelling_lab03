@@ -10,7 +10,7 @@ def solve(G: Callable, u: Callable, S0: np.array, T: float,
 
     :param G: function of two variables x, t - Green's function
     :param u: function of two variables x, t - Disturbance
-    :param S0: has next form: np.array([[a0, b0],...,[a_last, b_last]) - Space-time domain
+    :param S0: has next form: np.array([[a0, b0],...,[a_last, b_last]]) - Space-time domain
     :param T: float greater that zero - Max time value
     :param Lr0_list: list of Lr0 differential operators that look like: L(f) -> scipy.derivative(f) + ...
     :param xl0_list: list of float xl0: [x0, x1, x2, ...]
