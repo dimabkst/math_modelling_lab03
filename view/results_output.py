@@ -4,7 +4,7 @@ from tkinter import ttk
 
 class results_output:
 
-    def __init__(self, root):
+    def __init__(self, root, command):
 
         s = ttk.Style()
         s.configure("TopWhiteBg.TFrame", background="white", borderwidth=5, relief='raised')
@@ -21,7 +21,8 @@ class results_output:
         #
 
         # Solve button
-        self.solve_button = ttk.Button(self.solve_button_frame, text="Розв'язати систему")
+        self.solve_button = ttk.Button(self.solve_button_frame, text="Розв'язати систему",
+                                       command=command)
         self.solve_button.grid(column=1, row=1, sticky=(N, W, E, S))
         #
 

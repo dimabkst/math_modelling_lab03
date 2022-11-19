@@ -22,8 +22,8 @@ class initial_boundary_conditions_input:
         self.boundary_frame = ttk.Frame(self.root, style="WhiteBg.TFrame", padding="3 3 12 12")
         self.boundary_frame.grid(column=0, row=1, sticky=(N, W, E, S))
 
-        initial_conditions_input(self.initial_frame)
-        boundary_conditions_input(self.boundary_frame)
+        self.initial_conditions_input = initial_conditions_input(self.initial_frame)
+        self.boundary_conditions_input = boundary_conditions_input(self.boundary_frame)
 
         self.align_rows_cols(self.initial_frame)
         self.align_rows_cols(self.boundary_frame)

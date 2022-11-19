@@ -4,7 +4,8 @@ from calculations import y_infinity, A, Y_slash, A_v, P, u_0, u_G, y_0, y_G, y, 
 
 
 def solve(G: Callable, u: Callable, S0: np.array, T: float,
-          Lr0_list: np.array, xl0_list: np.array, LrG_list: np.array, slG_list: np.array,
+          Lr0_list: np.array, xl0_list: np.array, Yrl0_list: np.array,
+          LrG_list: np.array, slG_list: np.array, YrlG_list: np.array,
           v_0: Callable, v_G: Callable) -> Tuple[Callable, float]:
     """
 
@@ -14,8 +15,10 @@ def solve(G: Callable, u: Callable, S0: np.array, T: float,
     :param T: float greater that zero - Max time value
     :param Lr0_list: list of Lr0 differential operators that look like: L(f) -> scipy.derivative(f) + ...
     :param xl0_list: list of float xl0: [x0, x1, x2, ...]
+    :param Yrl0_list: np.array of np.arrays of Yrl0 that is float: [[Y110, Y120, ...], ...]
     :param LrG_list: list of LrG differential operators that look like: L(f) -> scipy.derivative(f) + ...
     :param slG_list: list of slG that is np.array of two float values x and t: [[x0, t0], [x1, t1], ...]
+    :param YrlG_list: np.array of np.arrays of YrlG that is float: [[Y11G, Y12G, ...], ...]
     :param v_0: function of two variables x, t
     :param v_G: function of two variables x, t
     :return: tuple of function of 2 variables x, t and float precision
@@ -23,7 +26,7 @@ def solve(G: Callable, u: Callable, S0: np.array, T: float,
 
     res_y_infinity = y_infinity(G, u, S0, T)
     res_A = A(G, Lr0_list, xl0_list, LrG_list, slG_list)
-    res_Y_slash = Y_slash(res_y_infinity, Lr0_list, xl0_list, LrG_list, slG_list)
+    res_Y_slash = Y_slash(res_y_infinity, Lr0_list, xl0_list, Yrl0_list, LrG_list, slG_list, YrlG_list)
     res_A_v = A_v(res_A, v_0, v_G, S0, T)
     res_P = P(res_A, S0, T)
     res_u_0 = u_0(res_A, res_P, res_Y_slash, res_A_v, v_0)

@@ -73,7 +73,7 @@ class problem_conditions_input:
         self.L_entry_frame.grid(column=1, row=0, sticky=(N, W, E, S))
 
         self.L_var = StringVar()
-        self.L_var.set("d^2/dt^2-16d^2/dx^2")
+        self.L_var.set("d[t,2]-16*d[x,2]")
 
         ttk.Label(self.L_label_frame, text="L(dx,dt) =", style="WhiteBg.TLabel") \
             .grid(column=0, row=0, sticky=(N, E, W, S))
@@ -105,9 +105,9 @@ class problem_conditions_input:
         self.G_entry_frame.grid(column=1, row=0, sticky=(N, W, E, S))
 
         self.G_var = StringVar()
-        self.G_var.set("sign((x-x')+4(t-t'))-sign((x-x')-4(t-t'))")
+        self.G_var.set("(1/sqrt(4*pi*t))*exp(-x^2/(4*t))")
 
-        ttk.Label(self.G_label_frame, text="G(x-x',t-t') =", style="WhiteBg.TLabel") \
+        ttk.Label(self.G_label_frame, text="G(x,t) =", style="WhiteBg.TLabel") \
             .grid(column=0, row=0, sticky=(N, E, W, S))
 
         self.G_entry = ttk.Entry(self.G_entry_frame, width=ENTRY_WIDTH, textvariable=self.G_var)
