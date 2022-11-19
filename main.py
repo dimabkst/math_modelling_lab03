@@ -31,30 +31,37 @@ if __name__ == "__main__":
     # ------------------------------------------------------------------------------------------------------------------
 
     # Calculations testing
-    # def G(x_, t_):
-    #     return x_ ** 2
-    #
-    #
-    # def u(x_, t_):
-    #     return x_ * t_
-    #
-    #
-    # S0 = np.array([[0, 1]])
-    # T = 1
-    #
-    # Lr0_list = np.array([differential_operator(0, 1)])
-    # # print(operator(0, 1)(lambda x_, t_: x_ + x_*t_, (1, 1)))
-    # xl0_list = np.array([0.5, 1, 0.3])
-    # LrG_list = np.array([differential_operator(1, 1)])
-    # slG_list = np.array([[0.5, 1],
-    #                      [0.25, 0.75]])
-    #
-    # v_0 = lambda x_, t_: x_ + t_
-    # v_G = lambda x_, t_: x_ - t_
-    #
-    # res_solve = solve(G, u, S0, T, Lr0_list, xl0_list, LrG_list, slG_list, v_0, v_G)
-    #
-    # print(res_solve)
+    # def G(x, t):
+    #     #     if t <= 5:
+    #     #         return 0
+    #     #     else:
+    #     #         return parse_function("(1/sqrt(4*pi*t))*exp(-x^2/(4*t))")(x, t)
+
+    def G(x, t):
+        return x**2 + x * t
+
+
+    def u(x, t):
+        return x * t
+
+
+    S0 = np.array([[0, 1]])
+    T = 1
+
+    Lr0_list = np.array([differential_operator(0, 1)])
+    xl0_list = np.array([0.5, 1, 0.3])
+    LrG_list = np.array([differential_operator(1, 1)])
+    slG_list = np.array([[0.5, 1],
+                         [0.25, 0.75]])
+
+    v_0 = lambda x_, t_: x_ + t_
+    v_G = lambda x_, t_: x_ - t_
+
+    res_solve, res_precision = solve(G, u, S0, T, Lr0_list, xl0_list, LrG_list, slG_list, v_0, v_G)
+
+    print(f'Solve function: {res_solve}')
+    print(f'Precision: {res_precision}')
+    print()
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -79,9 +86,8 @@ if __name__ == "__main__":
     print(f'Function value in ({x1}, {t1}): {res_parse_function1(x1, t1)}')
     print()
 
+    # function_str2 = "Piecewise((0, t<=0), ((1/sqrt(4*pi*t))*exp(-x^2/(4*t)), t>0))"
     function_str2 = "(1/sqrt(4*pi*t))*exp(-x^2/(4*t))"
-    # function_str2 = "(Piecewise((0, t<=0),(1, t>0))(t)/sqrt(4*pi*t))*exp(-x^2/(4*t))"
-    # function_str2 = "(Heaviside(t)/sqrt(4*pi*t))*exp(-x^2/(4*t))"
     print(f'Function string: {function_str2}')
     res_parse_function2 = parse_function(function_str2)
     x2, t2 = math.pi / 2, 1

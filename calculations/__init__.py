@@ -8,4 +8,5 @@ from .u_G import u_G
 from .y_0 import y_0
 from .y_G import y_G
 from .y import y
+from .precision import precision
 from .solve import solve

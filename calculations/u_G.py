@@ -25,6 +25,6 @@ def u_G(A_matrix: np.array, P: np.array, Y_slash: np.array, A_v: np.array, v_G: 
 
     def res(x: float, t: float) -> float:
         matrix_part = A_G(x, t) @ P_inv @ (Y_slash - A_v)  # Matrix 1x1
-        return matrix_part[0] + v_G(x, t)
+        return matrix_part[0][0] + v_G(x, t)
 
     return res

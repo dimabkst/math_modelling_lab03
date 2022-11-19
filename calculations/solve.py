@@ -1,11 +1,11 @@
-from typing import Callable
+from typing import Callable, Tuple
 import numpy as np
-from calculations import y_infinity, A, Y_slash, A_v, P, u_0, u_G, y_0, y_G, y
+from calculations import y_infinity, A, Y_slash, A_v, P, u_0, u_G, y_0, y_G, y, precision
 
 
 def solve(G: Callable, u: Callable, S0: np.array, T: float,
           Lr0_list: np.array, xl0_list: np.array, LrG_list: np.array, slG_list: np.array,
-          v_0: Callable, v_G: Callable) -> Callable:
+          v_0: Callable, v_G: Callable) -> Tuple[Callable, float]:
     """
 
     :param G: function of two variables x, t - Green's function
@@ -18,7 +18,7 @@ def solve(G: Callable, u: Callable, S0: np.array, T: float,
     :param slG_list: list of slG that is np.array of two float values x and t: [[x0, t0], [x1, t1], ...]
     :param v_0: function of two variables x, t
     :param v_G: function of two variables x, t
-    :return: function of 2 variables x, t
+    :return: tuple of function of 2 variables x, t and float precision
     """
 
     res_y_infinity = y_infinity(G, u, S0, T)
@@ -27,9 +27,11 @@ def solve(G: Callable, u: Callable, S0: np.array, T: float,
     res_A_v = A_v(res_A, v_0, v_G, S0, T)
     res_P = P(res_A, S0, T)
     res_u_0 = u_0(res_A, res_P, res_Y_slash, res_A_v, v_0)
-    res_u_G = u_0(res_A, res_P, res_Y_slash, res_A_v, v_G)
+    res_u_G = u_G(res_A, res_P, res_Y_slash, res_A_v, v_G)
     res_y_0 = y_0(G, S0, T, res_u_0)
     res_y_G = y_G(G, S0, T, res_u_G)
     res_y = y(res_y_infinity, res_y_0, res_y_G)
 
-    return res_y
+    res_precision = precision(res_Y_slash, res_P)
+
+    return res_y, res_precision
