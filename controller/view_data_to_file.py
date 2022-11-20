@@ -1,10 +1,11 @@
 import json
 
 
-def view_data_to_file(view) -> None:
+def view_data_to_file(view, file_path: str) -> None:
     """
 
     :param view: object of View class
+    :param file_path: string with path to the file in which to save
     :return: None
     """
     try:
@@ -66,7 +67,7 @@ def view_data_to_file(view) -> None:
             data['vG_list'].append(v_input.vG_vars[_].get())
 
         # saving in json file
-        with open("data.json", "w") as write_file:
+        with open(file_path, "w") as write_file:
             json.dump(data, write_file)
 
     except Exception as e:

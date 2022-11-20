@@ -28,11 +28,11 @@ def differential_operator(var: int = 0, der_order: int = 1):
 if __name__ == "__main__":
     try:
         # View testing
-        View()
+        View("data.json")
 
         # Controller testing
-        res_retrieve_data_from_file = retrieve_data_from_file("data.json")
-        print(res_retrieve_data_from_file)
+        # res_retrieve_data_from_file = retrieve_data_from_file("data.json")
+        # print(res_retrieve_data_from_file)
 
         # ------------------------------------------------------------------------------------------------------------------
 
@@ -108,7 +108,7 @@ if __name__ == "__main__":
         # res_parse_S0 = parse_S0(S0_str)
         # print(f'S0: {res_parse_S0}')
         # print()
-        res_parsed_data = parse_data(res_retrieve_data_from_file)
-        print(res_parsed_data)
+        # res_parsed_data = parse_data(res_retrieve_data_from_file)
+        # print(res_parsed_data)
     except Exception as e:
         print(e)

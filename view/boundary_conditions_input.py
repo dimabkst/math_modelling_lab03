@@ -112,7 +112,7 @@ class boundary_conditions_input:
 
         for i in range(int(self.LG_var.get() or 0)):
             self.slG_vars.append(StringVar())
-            self.slG_vars[i].set("1")
+            self.slG_vars[i].set("(0,0)")
             self.slG_vars[i].trace("w", lambda name, index, mode: self.change_and_show_boundary())
 
             self.slG_labels.append(ttk.Label(self.slG_slG_frame, text=f"s{i + 1}G", style="WhiteBg.TLabel"))
@@ -257,7 +257,7 @@ class boundary_conditions_input:
                             self.slG_entries.append(
                                 ttk.Entry(self.slG_slG_frame, width=ENTRY_WIDTH, textvariable=self.slG_vars[i]))
 
-                            self.slG_vars[i].set("1")
+                            self.slG_vars[i].set("(0,0)")
                             self.slG_vars[i].trace("w", lambda name, index, mode: self.change_and_show_boundary())
                             self.slG_labels[i].grid(row=0, column=i, sticky=(N, W, E, S))
                             self.slG_entries[i].grid(row=1, column=i, sticky=(N, W, E, S))

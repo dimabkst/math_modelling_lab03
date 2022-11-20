@@ -15,8 +15,8 @@ def parse_data(data: dict) -> dict:
         parsed_data['S0'] = parse_S0(data['S0'])
         parsed_data['T'] = parse_number(data['T'])
         parsed_data['L'] = parse_operator(data['L'])
-        parsed_data['u'] = parse_function('u')
-        parsed_data['G'] = parse_function('G')
+        parsed_data['u'] = parse_function(data['u'])
+        parsed_data['G'] = parse_function(data['G'])
 
         # parse initial conditions
         parsed_data['R0'] = parse_number(data['R0'])

@@ -4,12 +4,16 @@ from .problem_conditions_input import problem_conditions_input
 from .initial_boundary_conditions_input import initial_boundary_conditions_input
 from .results_output import results_output
 from .v_input import v_input
-from controller import view_data_to_file
+from controller import control
 
 
 class View:
 
-    def __init__(self):
+    def __init__(self, file_path):
+        """
+
+    :param file_path: string with path to the file with data
+        """
         try:
             self.root = Tk()
             self.root.configure(bg="white")
@@ -21,7 +25,7 @@ class View:
             self.problem_conditions_input = problem_conditions_input(self.root)
             self.initial_boundary_conditions_input = initial_boundary_conditions_input(self.root)
             self.v_input = v_input(self.root)
-            self.results_output = results_output(self.root, lambda: self.results_output_button_command())
+            self.results_output = results_output(self.root, lambda: self.results_output_button_command(file_path))
 
             self.notebook.add(self.problem_conditions_input.root, text='Умови задачі')
             self.notebook.add(self.initial_boundary_conditions_input.root, text='Початково-крайові умови')
@@ -42,5 +46,8 @@ class View:
         for j in range(cols_num):
             frame.grid_columnconfigure(j, weight=1)
 
-    def results_output_button_command(self):
-        view_data_to_file(self)
+    def results_output_button_command(self, file_path):
+        try:
+            control(self, file_path)
+        except Exception as e:
+            raise e
