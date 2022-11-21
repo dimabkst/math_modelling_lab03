@@ -16,7 +16,7 @@ def control(view, file_path: str) -> None:
         data_from_file = retrieve_data_from_file(file_path)
 
         parsed_data = parse_data(data_from_file)
-        print(parsed_data)
+        # print(parsed_data)
 
         for v_index in range(len(parsed_data['v0_list'])):
             solution, precision = solve(parsed_data['G'], parsed_data['u'], parsed_data['S0'], parsed_data['T'],
