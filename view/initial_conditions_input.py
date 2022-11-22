@@ -267,8 +267,9 @@ class initial_conditions_input:
     def change_and_show_yrl0(self):
         try:
             if (self.L0_var.get() and int(self.L0_var.get()) > 0) and (
-                    self.R0_var.get() and int(self.R0_var.get()) > 0) and all(
-                    [el.get() for el in self.Lr0_vars]) and all([el.get() for el in self.xl0_vars]):
+                    self.R0_var.get() and int(self.R0_var.get()) > 0) \
+                    and all([el.get() for el in self.Lr0_vars]) \
+                    and all([el.get() for el in self.xl0_vars]):
 
                 old_R0 = len(self.yrl0_vars)
                 old_L0 = len(self.yrl0_vars[0])
@@ -336,7 +337,7 @@ class initial_conditions_input:
                             self.yrl0_labels[i][j].grid(row=i, column=j * 2, sticky=(N, W, E, S))
 
         except Exception as e:
-            print(e)
+            raise e
 
     def change_and_show_initial(self):
         try:
@@ -344,4 +345,4 @@ class initial_conditions_input:
             self.change_and_show_xl0()
             self.change_and_show_yrl0()
         except Exception as e:
-            print(e)
+            raise e

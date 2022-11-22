@@ -27,53 +27,42 @@ def file_data_to_view(view, file_path: str) -> None:
 
         # initial conditions
         initial_conditions_input.R0_var.set(data['R0'])
-        initial_conditions_input.Lr0_vars = []
+        initial_conditions_input.change_and_show_initial()
         for _ in range(len(data['Lr0_list'])):
-            initial_conditions_input.Lr0_vars.append(StringVar())
             initial_conditions_input.Lr0_vars[-1].set(data['Lr0_list'][_])
 
         initial_conditions_input.L0_var.set(data['L0'])
-        initial_conditions_input.xl0_vars = []
+        initial_conditions_input.change_and_show_initial()
         for _ in range(len(data['xl0_list'])):
-            initial_conditions_input.xl0_vars.append(StringVar())
             initial_conditions_input.xl0_vars[-1].set(data['xl0_list'][_])
 
-        initial_conditions_input.Lr0_vars = []
         for _ in range(len(data['Yrl0_list'])):
-            initial_conditions_input.Lr0_vars.append([])
             for __ in range(len(data['Yrl0_list'][_])):
-                initial_conditions_input.Lr0_vars[-1].append(StringVar())
                 initial_conditions_input.yrl0_vars[-1][-1].set(data['Yrl0_list'][_][__])
 
         # boundary conditions
         boundary_conditions_input.RG_var.set(data['RG'])
-        boundary_conditions_input.LrG_vars = []
+        boundary_conditions_input.change_and_show_boundary()
         for _ in range(len(data['LrG_list'])):
-            boundary_conditions_input.LrG_vars.append(StringVar())
             boundary_conditions_input.LrG_vars[-1].set(data['LrG_list'][_])
 
         boundary_conditions_input.LG_var.set(data['LG'])
-        boundary_conditions_input.slG_vars = []
+        boundary_conditions_input.change_and_show_boundary()
         for _ in range(len(data['slG_list'])):
-            boundary_conditions_input.slG_vars.append(StringVar())
             boundary_conditions_input.slG_vars[-1].set(data['slG_list'][_])
 
-        boundary_conditions_input.LrG_vars = []
         for _ in range(len(data['YrlG_list'])):
-            boundary_conditions_input.LrG_vars.append([])
             for __ in range(len(data['YrlG_list'][_])):
-                boundary_conditions_input.LrG_vars[-1].append(StringVar())
                 boundary_conditions_input.yrlG_vars[-1][-1].set(data['YrlG_list'][_][__])
 
         # v
-        v_input.v0_vars = []
+        v_input.count_var.set(len(data['v0_list']))
+        v_input.change_and_show_v()
+
         for _ in range(len(data['v0_list'])):
-            v_input.v0_vars.append(StringVar())
             v_input.v0_vars[-1].set(data['v0_list'][_])
 
-        v_input.vG_vars = []
         for _ in range(len(data['vG_list'])):
-            v_input.vG_vars.append(StringVar())
             v_input.vG_vars[-1].set(data['vG_list'][_])
 
     except Exception as e:

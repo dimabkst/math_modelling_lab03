@@ -6,7 +6,6 @@ from .results_output import results_output
 from .v_input import v_input
 from .save_load import save_load
 from controller import control, view_data_to_file, file_data_to_view
-from typing import Callable
 
 
 class View:
@@ -24,7 +23,9 @@ class View:
             self.notebook = ttk.Notebook(self.root)
             self.notebook.grid(column=0, row=0, sticky=(N, E, W, S))
 
-            self.save_load = save_load(self.root, file_path, self.save_command, self.load_command)
+            self.save_load = save_load(self.root, file_path,
+                                       lambda _file_path: view_data_to_file(self, _file_path),
+                                       lambda _file_path: file_data_to_view(self, _file_path))
             self.problem_conditions_input = problem_conditions_input(self.root)
             self.initial_boundary_conditions_input = initial_boundary_conditions_input(self.root)
             self.v_input = v_input(self.root)
@@ -49,24 +50,6 @@ class View:
             frame.grid_rowconfigure(i, weight=1)
         for j in range(cols_num):
             frame.grid_columnconfigure(j, weight=1)
-
-    def save_command(self) -> Callable:
-        try:
-            def save_command_inner(file_path: str):
-                return view_data_to_file(self, file_path)
-
-            return save_command_inner
-        except Exception as e:
-            raise e
-
-    def load_command(self) -> Callable:
-        try:
-            def load_command_inner(file_path: str):
-                return file_data_to_view(self, file_path)
-
-            return load_command_inner
-        except Exception as e:
-            raise e
 
     def results_output_button_command(self, file_path: str):
         try:

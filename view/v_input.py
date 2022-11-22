@@ -121,4 +121,4 @@ class v_input:
                             self.vG_vars[i].set("0")
                             self.vG_entries[i].grid(row=1, column=i, sticky=(N, W, E, S))
         except Exception as e:
-            print(e)
+            raise e

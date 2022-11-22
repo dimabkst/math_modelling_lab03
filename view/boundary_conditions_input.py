@@ -267,8 +267,9 @@ class boundary_conditions_input:
     def change_and_show_yrlG(self):
         try:
             if (self.LG_var.get() and int(self.LG_var.get()) > 0) and (
-                    self.RG_var.get() and int(self.RG_var.get()) > 0) and all(
-                [el.get() for el in self.LrG_vars]) and all([el.get() for el in self.slG_vars]):
+                    self.RG_var.get() and int(self.RG_var.get()) > 0) \
+                    and all([el.get() for el in self.LrG_vars])\
+                    and all([el.get() for el in self.slG_vars]):
 
                 old_RG = len(self.yrlG_vars)
                 old_LG = len(self.yrlG_vars[0])
@@ -336,7 +337,7 @@ class boundary_conditions_input:
                             self.yrlG_labels[i][j].grid(row=i, column=j * 2, sticky=(N, W, E, S))
 
         except Exception as e:
-            print(e)
+            raise e
 
     def change_and_show_boundary(self):
         try:
@@ -344,4 +345,4 @@ class boundary_conditions_input:
             self.change_and_show_slG()
             self.change_and_show_yrlG()
         except Exception as e:
-            print(e)
+            raise e
