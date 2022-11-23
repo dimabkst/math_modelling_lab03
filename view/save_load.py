@@ -48,7 +48,7 @@ class save_load:
             self.load_buttons = []
             for i in range(self.current_save_number):
                 load_button = ttk.Button(self.load_frame, text=f'Збереження №{i + 1}',
-                                         command=lambda: self.load_command(
+                                         command=lambda i=i: self.load_command(
                                              self.save_file_prefix + str(i + 1) + self.save_file_suffix))
                 load_button.grid(column=0, row=i, sticky=(N, W, E, S))
 
@@ -90,9 +90,9 @@ class save_load:
     def change_and_show_load(self):
         try:
             load_button = ttk.Button(self.load_frame, text=f'Збереження №{self.current_save_number}',
-                                     command=lambda: self.load_command(self.save_file_prefix + str(
-                                         self.current_save_number) + self.save_file_suffix))
-            load_button.grid(column=0, row=self.current_save_number, sticky=(N, W, E, S))
+                                     command=lambda: self.load_command(
+                                         self.save_file_prefix + str(self.current_save_number) + self.save_file_suffix))
+            load_button.grid(column=0, row=self.current_save_number - 1, sticky=(N, W, E, S))
 
             self.load_buttons.append(load_button)
 

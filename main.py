@@ -111,4 +111,4 @@ if __name__ == "__main__":
         # res_parsed_data = parse_data(res_retrieve_data_from_file)
         # print(res_parsed_data)
     except Exception as e:
-        print(e)
+        raise e

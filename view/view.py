@@ -2,9 +2,10 @@ from tkinter import *
 from tkinter import ttk
 from .problem_conditions_input import problem_conditions_input
 from .initial_boundary_conditions_input import initial_boundary_conditions_input
-from .results_output import results_output
+from .solve_button import solve_button
 from .v_input import v_input
 from .save_load import save_load
+from .results_output import results_output
 from controller import control, view_data_to_file, file_data_to_view
 
 
@@ -29,13 +30,15 @@ class View:
             self.problem_conditions_input = problem_conditions_input(self.root)
             self.initial_boundary_conditions_input = initial_boundary_conditions_input(self.root)
             self.v_input = v_input(self.root)
-            self.results_output = results_output(self.root, lambda: self.results_output_button_command(file_path))
+            self.solve_button = solve_button(self.root, lambda: self.solve_button_command(file_path))
+            self.results_output = results_output(self.root)
 
             self.notebook.add(self.save_load.root, text='Зберегти/Завантажити')
             self.notebook.add(self.problem_conditions_input.root, text='Умови задачі')
             self.notebook.add(self.initial_boundary_conditions_input.root, text='Початково-крайові умови')
             self.notebook.add(self.v_input.root, text='Ввід v(x,t)')
-            self.notebook.add(self.results_output.root, text='Вивід результатів')
+            self.notebook.add(self.solve_button.root, text="Розв'язати задачу")
+            self.notebook.add(self.results_output.root, text="Результати")
 
             self.align_rows_cols(self.notebook)
             self.align_rows_cols(self.root)
@@ -51,7 +54,7 @@ class View:
         for j in range(cols_num):
             frame.grid_columnconfigure(j, weight=1)
 
-    def results_output_button_command(self, file_path: str):
+    def solve_button_command(self, file_path: str):
         try:
             control(self, file_path)
         except Exception as e:

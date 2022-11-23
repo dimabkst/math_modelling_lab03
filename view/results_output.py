@@ -4,11 +4,10 @@ from tkinter import ttk
 
 class results_output:
 
-    def __init__(self, root, command):
+    def __init__(self, root):
         try:
             s = ttk.Style()
             s.configure("TopWhiteBg.TFrame", background="white", borderwidth=5, relief='raised')
-            s.configure("VectorWhiteBg.TFrame", background="white", borderwidth=5, relief="solid")
             s.configure("WhiteBg.TFrame", background="white")
             s.configure("WhiteBg.TLabel", background="white")
 
@@ -16,24 +15,58 @@ class results_output:
             self.root = ttk.Frame(root, style="TopWhiteBg.TFrame", padding="3 3 12 12")
             self.root.grid(column=0, row=0, sticky=(N, W, E, S))
 
-            self.solve_button_frame = ttk.Frame(self.root, style="TopWhiteBg.TFrame", padding="3 3 12 12")
-            self.solve_button_frame.grid(column=0, row=0, sticky=(N, W, E, S))
-            #
-
-            # Solve button
-            self.solve_button = ttk.Button(self.solve_button_frame, text="Розв'язати систему",
-                                           command=command)
-            self.solve_button.grid(column=1, row=1, sticky=(N, W, E, S))
+            self.results_output_frame = ttk.Frame(self.root, style="WhiteBg.TFrame", padding="3 3 12 12")
+            self.results_output_frame.grid(column=0, row=0, sticky=(N, W, E, S))
             #
 
             # Align
-            self.align_rows_cols(self.solve_button_frame)
-            self.solve_button_frame.grid_rowconfigure(0, weight=1)
-            self.solve_button_frame.grid_rowconfigure(2, weight=1)
-            self.solve_button_frame.grid_columnconfigure(2, weight=1)
-
+            self.align_rows_cols(self.results_output_frame)
             self.align_rows_cols(self.root)
             #
+        except Exception as e:
+            raise e
+
+    def receive_data_and_show_it(self, solutions):
+        try:
+            # Cleaning everything that was before
+            for child in self.results_output_frame.winfo_children():
+                for grandchild in child.winfo_children():
+                    grandchild.destroy()
+
+            # Output results
+            for i in range(len(solutions)):
+                solution = solutions[i]["solution"]
+                precision = solutions[i]["precision"]
+
+                step_frame = ttk.Frame(self.results_output_frame, style="TopWhiteBg.TFrame", padding="3 3 12 12")
+                step_frame.grid(column=0, row=i, sticky=(N, W, E, S))
+
+                solution_step_frame = ttk.Frame(step_frame, style="WhiteBg.TFrame", padding="3 3 12 12")
+                solution_step_frame.grid(column=0, row=0, sticky=(N, W, E, S))
+
+                precision_step_frame = ttk.Frame(step_frame, style="WhiteBg.TFrame", padding="3 3 12 12")
+                precision_step_frame.grid(column=1, row=0, sticky=(N, W, E, S))
+
+                ttk.Label(solution_step_frame, text=f"Розв'язок №{i+1}", style="WhiteBg.TLabel") \
+                    .grid(column=0, row=0, sticky=(N, W, E, S))
+                ttk.Label(solution_step_frame, text=f"{solution}", style="WhiteBg.TLabel") \
+                    .grid(column=1, row=0, sticky=(N, W, E, S))
+
+                ttk.Label(precision_step_frame, text=f"Точність розв'язку №{i+1} Ɛ²:", style="WhiteBg.TLabel") \
+                    .grid(column=0, row=0, sticky=(N, W, E, S))
+                ttk.Label(precision_step_frame, text=f"{precision}", style="WhiteBg.TLabel") \
+                    .grid(column=1, row=0, sticky=(N, W, E, S))
+
+                self.align_rows_cols(solution_step_frame)
+                self.align_rows_cols(solution_step_frame)
+
+                self.align_rows_cols(precision_step_frame)
+                self.align_rows_cols(precision_step_frame)
+
+                self.align_rows_cols(step_frame)
+
+            self.align_rows_cols(self.results_output_frame)
+            self.align_rows_cols(self.root)
         except Exception as e:
             raise e
 
