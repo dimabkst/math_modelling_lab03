@@ -1,5 +1,8 @@
 from tkinter import *
 from tkinter import ttk
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+import numpy as np
 
 
 class results_output:
@@ -44,18 +47,51 @@ class results_output:
                 solution_step_frame = ttk.Frame(step_frame, style="WhiteBg.TFrame", padding="3 3 12 12")
                 solution_step_frame.grid(column=0, row=0, sticky=(N, W, E, S))
 
+                plot_step_frame = ttk.Frame(solution_step_frame, style="WhiteBg.TFrame", padding="3 3 12 12")
+                plot_step_frame.grid(column=1, row=0, sticky=(N, W, E, S))
+
                 precision_step_frame = ttk.Frame(step_frame, style="WhiteBg.TFrame", padding="3 3 12 12")
                 precision_step_frame.grid(column=1, row=0, sticky=(N, W, E, S))
 
-                ttk.Label(solution_step_frame, text=f"Розв'язок №{i+1}", style="WhiteBg.TLabel") \
-                    .grid(column=0, row=0, sticky=(N, W, E, S))
-                ttk.Label(solution_step_frame, text=f"{solution}", style="WhiteBg.TLabel") \
-                    .grid(column=1, row=0, sticky=(N, W, E, S))
-
-                ttk.Label(precision_step_frame, text=f"Точність розв'язку №{i+1} Ɛ²:", style="WhiteBg.TLabel") \
+                ttk.Label(precision_step_frame, text=f"Точність розв'язку №{i + 1} Ɛ²:", style="WhiteBg.TLabel") \
                     .grid(column=0, row=0, sticky=(N, W, E, S))
                 ttk.Label(precision_step_frame, text=f"{precision}", style="WhiteBg.TLabel") \
                     .grid(column=1, row=0, sticky=(N, W, E, S))
+
+                ttk.Label(solution_step_frame, text=f"Розв'язок №{i + 1}", style="WhiteBg.TLabel") \
+                    .grid(column=0, row=0, sticky=(N, W, E, S))
+                # ttk.Label(solution_step_frame, text=f"{solution}", style="WhiteBg.TLabel") \
+                #     .grid(column=1, row=0, sticky=(N, W, E, S))
+
+                # Plot of solution
+                # the figure that will contain the plot
+                step_fig = Figure(figsize=(5, 5), dpi=100)
+                # adding the subplot
+                step_plot = step_fig.add_subplot(111, projection="3d")
+                # plotting the graph
+                x_values = np.arange(-1.0, 1.0, 0.05)
+                t_values = np.arange(-1.0, 1.0, 0.05)
+
+                X_values, T_values = np.meshgrid(x_values, t_values)
+                Y_values = [[solution(x_value, t_value) for t_value in t_values] for x_value in x_values]
+                Y_values = np.array(Y_values)
+                step_plot.plot_surface(X_values, T_values, Y_values, rstride=1, cstride=1,
+                                       cmap='viridis', edgecolor='none')
+
+                # creating the Tkinter canvas containing the Matplotlib figure
+                step_canvas = FigureCanvasTkAgg(step_fig, master=plot_step_frame)
+                step_canvas.draw()
+
+                # placing the canvas on the Tkinter window
+                step_canvas.get_tk_widget().pack()
+
+                # creating the Matplotlib toolbar
+                step_toolbar = NavigationToolbar2Tk(step_canvas, plot_step_frame)
+                step_toolbar.update()
+
+                # placing the toolbar on the Tkinter window
+                step_canvas.get_tk_widget().pack()
+                #
 
                 self.align_rows_cols(solution_step_frame)
                 self.align_rows_cols(solution_step_frame)
