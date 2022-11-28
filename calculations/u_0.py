@@ -5,7 +5,7 @@ from typing import Callable
 def u_0(A_matrix: np.array, P: np.array, Y_slash: np.array, A_v: np.array, v_0: Callable) -> Callable:
     """
 
-    :param A_matrix: list with elements A11, A12, A21, A22
+    :param A_matrix: np.array with elements A11, A12, A21, A22
     :param P: np.array square matrix of floats P with L0*RO + LG*RG dimension
     :param Y_slash: np.array matrix of floats with L0*R0 + LG*RG rows and 1 col
     :param A_v: np.array matrix of floats with L0*R0 + LG*RG rows and 1 col

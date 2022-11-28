@@ -6,7 +6,7 @@ from scipy.integrate import dblquad
 def A_v(A_matrix: np.array, v_0: Callable, v_G: Callable, S0: np.array, T: float) -> np.array:
     """
 
-    :param A_matrix: list with elements A11, A12, A21, A22
+    :param A_matrix: np.array with elements A11, A12, A21, A22
     :param v_0: function of two arguments x, t
     :param v_G: function of two arguments x, t
     :param S0: has next form: np.array([[a0, b0],...,[a_last, b_last]) - Space-time domain

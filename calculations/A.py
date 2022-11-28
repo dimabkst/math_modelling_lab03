@@ -6,10 +6,10 @@ def A(G: Callable, Lr0_list: np.array, xl0_list: np.array, LrG_list: np.array, s
     """
 
     :param G: function of two variables x, t - Green's function
-    :param Lr0_list: list of Lr0 differential operators that look like: L(f) -> scipy.derivative(f) + ...
-    :param xl0_list: list of float xl0: [x0, x1, x2, ...]
-    :param LrG_list: list of LrG differential operators that look like: L(f) -> scipy.derivative(f) + ...
-    :param slG_list: list of slG that is np.array of two float values x and t: [[x0, t0], [x1, t1], ...]
+    :param Lr0_list: np.array of Lr0 differential operators that look like: L(f) -> scipy.derivative(f) + ...
+    :param xl0_list: np.array of float xl0: [x0, x1, x2, ...]
+    :param LrG_list: np.array of LrG differential operators that look like: L(f) -> scipy.derivative(f) + ...
+    :param slG_list: np.array of slG that is np.array of two float values x and t: [[x0, t0], [x1, t1], ...]
     :return: np.array of A11, A12, A21, A22 that are np.arrays matrix of two variables functions
     """
 

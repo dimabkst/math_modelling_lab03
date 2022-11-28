@@ -6,7 +6,7 @@ from scipy.integrate import dblquad
 def P(A_matrix: np.array, S0: np.array, T: float) -> np.array:
     """
 
-    :param A_matrix: list with elements A11, A12, A21, A22
+    :param A_matrix: np.array with elements A11, A12, A21, A22
     :param S0: has next form: np.array([[a0, b0],...,[a_last, b_last]) - Space-time domain
     :param T: float greater that zero - Max time value
     :return: np.array square matrix of P11, P12, P21, P22 matrices
