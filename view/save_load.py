@@ -46,13 +46,19 @@ class save_load:
 
             # Load buttons
             self.load_buttons = []
+            self.delete_buttons = []
             for i in range(self.current_save_number):
                 load_button = ttk.Button(self.load_frame, text=f'Збереження №{i + 1}',
                                          command=lambda i=i: self.load_command(
                                              self.save_file_prefix + str(i + 1) + self.save_file_suffix))
                 load_button.grid(column=0, row=i, sticky=(N, W, E, S))
 
+                delete_button = ttk.Button(self.load_frame, text=f'Видалити збереження №{i + 1}',
+                                           command=lambda i=i: self.delete_save(i + 1))
+                delete_button.grid(column=1, row=i, sticky=(N, W, E, S))
+
                 self.load_buttons.append(load_button)
+                self.delete_buttons.append(delete_button)
             #
 
             # Align
@@ -68,6 +74,14 @@ class save_load:
         cols_num, rows_num = frame.grid_size()
         for i in range(rows_num):
             frame.grid_rowconfigure(i, weight=1)
+        for j in range(cols_num):
+            frame.grid_columnconfigure(j, weight=1)
+
+    def align_rows_cols_after_row_deleting(self, frame):
+        cols_num, rows_num = frame.grid_size()
+        for i in range(rows_num - 1):
+            frame.grid_rowconfigure(i, weight=1)
+        frame.grid_rowconfigure(rows_num - 1, weight=0)
         for j in range(cols_num):
             frame.grid_columnconfigure(j, weight=1)
 
@@ -90,12 +104,46 @@ class save_load:
     def change_and_show_load(self):
         try:
             load_button = ttk.Button(self.load_frame, text=f'Збереження №{self.current_save_number}',
-                                     command=lambda: self.load_command(
-                                         self.save_file_prefix + str(self.current_save_number) + self.save_file_suffix))
+                                     command=lambda i=self.current_save_number: self.load_command(
+                                         self.save_file_prefix + str(i) + self.save_file_suffix))
             load_button.grid(column=0, row=self.current_save_number - 1, sticky=(N, W, E, S))
-
             self.load_buttons.append(load_button)
 
+            delete_button = ttk.Button(self.load_frame, text=f'Видалити збереження №{self.current_save_number}',
+                                       command=lambda i=self.current_save_number: self.delete_save(i))
+            delete_button.grid(column=1, row=self.current_save_number - 1, sticky=(N, W, E, S))
+            self.delete_buttons.append(delete_button)
+
             self.align_rows_cols(self.load_frame)
+        except Exception as e:
+            raise e
+
+    def delete_save(self, save_number: int):
+        try:
+            # Check save number
+            if save_number > len(self.load_buttons) or save_number < 1:
+                raise Exception("There is no such save file")
+
+            # Delete wanted save file
+            os.remove(self.save_file_prefix + str(save_number) + self.save_file_suffix)
+
+            # Decrement numbers in names of save files that go after deleted one
+            for i in range(save_number, len(self.load_buttons)):
+                os.rename(self.save_file_prefix + str(i + 1) + self.save_file_suffix,
+                          self.save_file_prefix + str(i) + self.save_file_suffix)
+
+            # Delete last load and delete buttons, because there won't be such save file after previous decrementing
+            self.load_buttons[-1].destroy()
+            self.load_buttons.pop()
+
+            self.delete_buttons[-1].destroy()
+            self.delete_buttons.pop()
+
+            # For future saves
+            self.current_save_number -= 1
+            self.change_save_file_path()
+
+            # Align buttons
+            self.align_rows_cols_after_row_deleting(self.load_frame)
         except Exception as e:
             raise e
