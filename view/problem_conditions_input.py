@@ -72,6 +72,9 @@ class problem_conditions_input:
         self.L_entry_frame = ttk.Frame(self.L_frame, padding="3 3 12 12", style="WhiteBg.TFrame")
         self.L_entry_frame.grid(column=1, row=0, sticky=(N, W, E, S))
 
+        self.L_format_frame = ttk.Frame(self.L_frame, padding="3 3 12 12", style="WhiteBg.TFrame")
+        self.L_format_frame.grid(column=1, row=1, sticky=(N, W, E, S))
+
         self.L_var = StringVar()
         self.L_var.set("1*d[t,2]-16*d[x,2]")
 
@@ -80,6 +83,14 @@ class problem_conditions_input:
 
         self.L_entry = ttk.Entry(self.L_entry_frame, width=ENTRY_WIDTH, textvariable=self.L_var)
         self.L_entry.grid(column=0, row=0, sticky=(N, E, W, S))
+
+        ttk.Label(self.L_format_frame, text="Формат вводу частинних похідних:", style="WhiteBg.TLabel") \
+            .grid(column=0, row=0, sticky=(N, E, W, S))
+
+        L_format_image = PhotoImage(file="../lab/assets/derivative.gif")
+        L_format_image_label = ttk.Label(self.L_format_frame, image=L_format_image, style="WhiteBg.TLabel")
+        L_format_image_label.image = L_format_image
+        L_format_image_label.grid(column=1, row=0, sticky=(N, E, W, S))
         #
 
         # u_input
