@@ -18,6 +18,8 @@ def control(view, file_path: str) -> None:
         parsed_data = parse_data(data_from_file)
         # print(parsed_data)
 
+        if len(parsed_data['v0_list']) != len(parsed_data['vG_list']):
+            raise Exception("Lengths of v0s and vGs should be equal")
         solutions = []
         for v_index in range(len(parsed_data['v0_list'])):
             solution, precision = solve(parsed_data['G'], parsed_data['u'], parsed_data['S0'], parsed_data['T'],

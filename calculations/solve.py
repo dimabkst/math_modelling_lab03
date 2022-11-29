@@ -1,6 +1,6 @@
 from typing import Callable, Tuple
 import numpy as np
-from calculations import y_infinity, A, Y_slash, A_v, P, u_0, u_G, y_0, y_G, y, precision
+from calculations import y_infinity, A, Y_slash, A_v, P, u_0, u_G, y_0, y_G, y, precision, validate_input
 
 
 def solve(G: Callable, u: Callable, S0: np.array, T: float,
@@ -24,6 +24,11 @@ def solve(G: Callable, u: Callable, S0: np.array, T: float,
     :return: tuple of function of 2 variables x, t and float precision
     """
     try:
+        validate_input(G, u, S0, T,
+                       Lr0_list, xl0_list, Yrl0_list,
+                       LrG_list, slG_list, YrlG_list,
+                       v_0, v_G)
+
         res_y_infinity = y_infinity(G, u, S0, T)
         res_A = A(G, Lr0_list, xl0_list, LrG_list, slG_list)
         res_Y_slash = Y_slash(res_y_infinity, Lr0_list, xl0_list, Yrl0_list, LrG_list, slG_list, YrlG_list)
